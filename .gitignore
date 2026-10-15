@@ -9,3 +9,5 @@ nb-configuration.xml
 nbproject/
 *.DS_STORE
 *.class
+# Local credentials
+credentials.properties

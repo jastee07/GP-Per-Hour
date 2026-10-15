@@ -3,7 +3,8 @@ plugins {
 }
 
 repositories {
-	mavenLocal()
+	// Deliberately no mavenLocal(): a stale ~/.m2 copy of a module shadows Maven Central for every one of
+	// its artifacts, which breaks resolution of platform-specific natives classifiers (e.g. lwjgl linux-arm64).
 	maven {
 		url = 'https://repo.runelite.net'
 		content {
@@ -41,6 +42,11 @@ tasks.register('run', JavaExec) {
 
 	jvmArgs "-ea"
 	args "--developer-mode", "--debug"
+}
+
+// Prints the runtime classpath, for launching the dev client by hand without Gradle (see run-dev.sh).
+tasks.register('printClasspath') {
+	doLast { println(sourceSets.test.runtimeClasspath.asPath) }
 }
 
 tasks.register('shadowJar', Jar) {

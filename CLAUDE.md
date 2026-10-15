@@ -23,6 +23,19 @@ A RuneLite plugin that tracks GP/hr (gold per hour) in Old School RuneScape. It 
 ./gradlew shadowJar
 ```
 
+### Running with a Jagex Account
+
+Jagex Accounts can't use the legacy login form, so dev mode uses RuneLite's saved-credential flow:
+
+1. In the ordinary macOS Terminal app, run `./jagex-dev.sh --configure`.
+2. Add `--insecure-write-credentials` under **Client arguments** and save.
+3. Launch RuneLite once through the Jagex Launcher, then close that client.
+4. Run `./jagex-dev.sh` (it execs `./run-dev.sh`, which launches the dev client without Gradle in the loop).
+
+RuneLite writes `~/.runelite/credentials.properties`. Treat it like a password: never print, copy, or commit it. Remove the client argument and delete the file when done.
+
+`run-dev.sh` caches the classpath in `build/dev-classpath.txt` and regenerates it when `build.gradle` changes (`./gradlew -q printClasspath`).
+
 Uses `latest.release` of the RuneLite client. Lombok is used for boilerplate reduction (`@Getter`, `@Setter`, `@Slf4j`, `@AllArgsConstructor`, etc.).
 
 ## Architecture
